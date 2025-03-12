@@ -340,10 +340,7 @@ final class FlutterBluePlusDarwin extends FlutterBluePlusPlatform {
     // handle method call
     switch (call.method) {
       case 'Logger':
-        return _loggerController.add(
-          call.arguments.where((m) => m is String || m is List<int>)
-            .map((str) => (str is String) ? str : String.fromCharCodes(str))
-        );
+        return _loggerController.add(call.arguments.toString());
       case 'OnAdapterStateChanged':
         return _onAdapterStateChangedController.add(
           BmBluetoothAdapterState.fromMap(
