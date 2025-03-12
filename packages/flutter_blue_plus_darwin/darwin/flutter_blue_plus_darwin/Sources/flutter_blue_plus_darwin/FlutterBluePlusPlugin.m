@@ -2145,6 +2145,8 @@ typedef NS_ENUM(NSUInteger, LogLevel) {
     {
         va_list args;
         va_start(args, format);
+        //ログはFlutter側に送信する。
+        [self.methodChannel invokeMethod:@"Logger" arguments:format];
         NSString* msg = [[NSString alloc] initWithFormat:format arguments:args];
         NSLog(@"%@", msg);
         va_end(args);

@@ -610,6 +610,9 @@ class FlutterBluePlus {
     print(s);
   }
 
+  Stream<String> get logger =>
+      FlutterBluePlusPlatform.instance.logger;
+
   /// Checks if Bluetooth functionality is turned on
   @Deprecated('Use adapterState.first == BluetoothAdapterState.on instead')
   static Future<bool> get isOn async => await adapterState.first == BluetoothAdapterState.on;

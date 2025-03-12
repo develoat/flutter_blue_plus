@@ -29,6 +29,10 @@ abstract base class FlutterBluePlusPlatform {
     _instance = instance;
   }
 
+  Stream<String> get logger {
+    return Stream.empty();
+  }
+
   Stream<BmBluetoothAdapterState> get onAdapterStateChanged {
     return Stream.empty();
   }

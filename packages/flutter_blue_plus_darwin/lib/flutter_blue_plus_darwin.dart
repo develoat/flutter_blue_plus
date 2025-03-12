@@ -13,6 +13,7 @@ final class FlutterBluePlusDarwin extends FlutterBluePlusPlatform {
   var _logLevel = LogLevel.none;
   var _logColor = true;
 
+  final _loggerController = StreamController<String>.broadcast();
   final _onAdapterStateChangedController = StreamController<BmBluetoothAdapterState>.broadcast();
   final _onCharacteristicReceivedController = StreamController<BmCharacteristicData>.broadcast();
   final _onCharacteristicWrittenController = StreamController<BmCharacteristicData>.broadcast();
@@ -25,6 +26,12 @@ final class FlutterBluePlusDarwin extends FlutterBluePlusPlatform {
   final _onReadRssiController = StreamController<BmReadRssiResult>.broadcast();
   final _onScanResponseController = StreamController<BmScanResponse>.broadcast();
   final _onServicesResetController = StreamController<BmBluetoothDevice>.broadcast();
+
+  @override
+  Stream<String> get logger {
+    return _loggerController.stream;
+  }
+
 
   @override
   Stream<BmBluetoothAdapterState> get onAdapterStateChanged {
@@ -332,6 +339,11 @@ final class FlutterBluePlusDarwin extends FlutterBluePlusPlatform {
 
     // handle method call
     switch (call.method) {
+      case 'Logger':
+        return _loggerController.add(
+          call.arguments.where((m) => m is String || m is List<int>)
+            .map((str) => (str is String) ? str : String.fromCharCodes(str))
+        );
       case 'OnAdapterStateChanged':
         return _onAdapterStateChangedController.add(
           BmBluetoothAdapterState.fromMap(

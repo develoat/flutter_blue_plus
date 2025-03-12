@@ -2817,6 +2817,10 @@ public class FlutterBluePlusPlugin implements
         if(level.ordinal() > logLevel.ordinal()) {
             return;
         }
+        //ログはFlutter側に送信する。
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("message", message);
+        invokeMethodUIThread("Logger", response);
         switch(level) {
             case DEBUG:
                 Log.d(TAG, "[FBP] " + message);
@@ -2840,7 +2844,7 @@ public class FlutterBluePlusPlugin implements
             if (methodChannel != null) {
                 methodChannel.invokeMethod(method, data);
             } else {
-                log(LogLevel.WARNING, "invokeMethodUIThread: tried to call method on closed channel: " + method);
+                //log(LogLevel.WARNING, "invokeMethodUIThread: tried to call method on closed channel: " + method);
             }
         });
     }

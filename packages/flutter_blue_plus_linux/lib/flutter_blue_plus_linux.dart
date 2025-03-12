@@ -18,6 +18,11 @@ final class FlutterBluePlusLinux extends FlutterBluePlusPlatform {
   final _onReadRssiController = StreamController<BmReadRssiResult>.broadcast();
 
   @override
+  Stream<String> get logger {
+    return Stream.empty();
+  }
+
+  @override
   Stream<BmBluetoothAdapterState> get onAdapterStateChanged {
     return _client.adaptersChanged.where(
       (adapters) {
