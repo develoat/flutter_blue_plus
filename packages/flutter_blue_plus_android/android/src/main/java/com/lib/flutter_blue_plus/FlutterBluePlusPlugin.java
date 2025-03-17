@@ -439,11 +439,15 @@ public class FlutterBluePlusPlugin implements
                             return;
                         }
 
+                        //Bluetooth有効にする場合に許可が表示されない非推奨のAPIを利用する(AndroidOS12以下かつ、キャッシュクリア時にしか利用していないため)
+                        result.success(mBluetoothAdapter.enable());
+                        /*
                         Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
 
                         activityBinding.getActivity().startActivityForResult(enableBtIntent, enableBluetoothRequestCode);
 
                         result.success(true);
+                        */
                         return;
                     });
                     break;
